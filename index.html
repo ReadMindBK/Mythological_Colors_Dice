@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dado Virtual</title>
+
+    <style>
+
+    /* ================================================= */
+    /* CONFIGURACIÓN DEL DADO                            */
+    /* ================================================= */
+
+    :root {
+
+        /* TAMAÑO DEL DADO */
+        --dado-tamano: 210px;
+
+        /* TAMAÑO DE LOS PUNTOS */
+        --punto-tamano: 40px;
+
+        /* COLOR NORMAL DEL DADO */
+        --dado-color: #ffffff;
+
+        /* COLOR DEL DADO AL SER PRESIONADO */
+        --dado-color-presionado: #ffd92f;
+
+        /* COLOR DE LOS PUNTOS */
+        --punto-color: #229922;
+
+        /* REDONDEO DEL DADO */
+        --dado-radio: 22px;
+    }
+
+
+    /* ========================= */
+    /* PÁGINA */
+    /* ========================= */
+
+    body{
+        margin:0;
+        background:#ffffff;
+        font-family:Arial,Helvetica,sans-serif;
+    }
+
+
+    /* ========================= */
+    /* TARJETA */
+    /* ========================= */
+
+    .card{
+        position:relative;
+        width:calc(100% - 32px);
+        max-width:420px;
+        margin:20px auto;
+
+        border-radius:20px;
+
+        /* Permite que la sombra del dado no se corte */
+        overflow:visible;
+    }
+
+    .cover{
+        display:block;
+        width:100%;
+        border-radius:20px;
+    }
+
+
+    /* ================================================= */
+    /* DADO                                             */
+    /* ================================================= */
+
+    .dado{
+
+        position:absolute;
+
+        /* POSICIÓN DEL DADO SOBRE LA PORTADA */
+        top:72%;
+        left:50%;
+
+        transform:translate(-50%,-50%);
+
+        width:var(--dado-tamano);
+        height:var(--dado-tamano);
+
+        background:var(--dado-color);
+
+        border-radius:var(--dado-radio);
+
+        z-index:10;
+
+        cursor:pointer;
+
+        display:grid;
+
+        grid-template-columns:1fr 1fr 1fr;
+        grid-template-rows:1fr 1fr 1fr;
+
+        padding:18px;
+
+        box-sizing:border-box;
+
+        /* SOMBRA */
+
+        box-shadow:
+            0 10px 18px rgba(0,0,0,.28),
+            0 3px 5px rgba(0,0,0,.15),
+            inset 0 -5px 0 rgba(0,0,0,.08);
+
+        transition:
+            background-color .15s ease,
+            box-shadow .15s ease;
+    }
+
+
+    /* ================================================= */
+    /* DADO PRESIONADO                                  */
+    /* ================================================= */
+
+    .dado.presionado{
+
+        background:var(--dado-color-presionado);
+
+        box-shadow:
+            0 10px 18px rgba(0,0,0,.30),
+            0 4px 7px rgba(0,0,0,.18),
+            inset 0 -5px 0 rgba(0,0,0,.08);
+    }
+
+
+    /* ================================================= */
+    /* EFECTO AL PRESIONAR                              */
+    /* ================================================= */
+
+    .dado:active{
+
+        transform:
+            translate(-50%,-50%)
+            scale(.94);
+
+        box-shadow:
+            0 5px 10px rgba(0,0,0,.25),
+            inset 0 -3px 0 rgba(0,0,0,.08);
+    }
+
+
+    /* ========================= */
+    /* PUNTOS */
+    /* ========================= */
+
+    .punto{
+
+        width:var(--punto-tamano);
+        height:var(--punto-tamano);
+
+        background:var(--punto-color);
+
+        border-radius:50%;
+
+        align-self:center;
+        justify-self:center;
+    }
+
+
+    /* ================================================= */
+    /* POSICIONES DE LOS PUNTOS                         */
+    /* ================================================= */
+
+    .p1{
+        grid-column:1;
+        grid-row:1;
+    }
+
+    .p2{
+        grid-column:2;
+        grid-row:1;
+    }
+
+    .p3{
+        grid-column:3;
+        grid-row:1;
+    }
+
+    .p4{
+        grid-column:1;
+        grid-row:2;
+    }
+
+    .p5{
+        grid-column:2;
+        grid-row:2;
+    }
+
+    .p6{
+        grid-column:3;
+        grid-row:2;
+    }
+
+    .p7{
+        grid-column:1;
+        grid-row:3;
+    }
+
+    .p8{
+        grid-column:2;
+        grid-row:3;
+    }
+
+    .p9{
+        grid-column:3;
+        grid-row:3;
+    }
+
+
+    /* ================================================= */
+    /* ANIMACIÓN DEL DADO                               */
+    /* ================================================= */
+
+    .tirando{
+
+        animation:
+            tirarDado .45s ease;
+    }
+
+    @keyframes tirarDado{
+
+        0%{
+            transform:
+                translate(-50%,-50%)
+                rotate(0deg)
+                scale(1);
+
+            box-shadow:
+                0 10px 18px rgba(0,0,0,.28),
+                0 3px 5px rgba(0,0,0,.15),
+                inset 0 -5px 0 rgba(0,0,0,.08);
+        }
+
+        30%{
+            transform:
+                translate(-50%,-50%)
+                rotate(15deg)
+                scale(1.08);
+
+            box-shadow:
+                0 16px 25px rgba(0,0,0,.30),
+                0 5px 8px rgba(0,0,0,.18),
+                inset 0 -5px 0 rgba(0,0,0,.08);
+        }
+
+        60%{
+            transform:
+                translate(-50%,-50%)
+                rotate(-15deg)
+                scale(1.08);
+
+            box-shadow:
+                0 16px 25px rgba(0,0,0,.30),
+                0 5px 8px rgba(0,0,0,.18),
+                inset 0 -5px 0 rgba(0,0,0,.08);
+        }
+
+        100%{
+            transform:
+                translate(-50%,-50%)
+                rotate(0deg)
+                scale(1);
+
+            box-shadow:
+                0 10px 18px rgba(0,0,0,.28),
+                0 3px 5px rgba(0,0,0,.15),
+                inset 0 -5px 0 rgba(0,0,0,.08);
+        }
+    }
+
+
+    /* ================================================= */
+    /* BOTÓN SITIO WEB                                  */
+    /* ================================================= */
+
+    .contenedor-enlace-web {
+
+        text-align:center;
+
+        margin-top:150px;
+
+        margin-bottom:20px;
+
+        width:100%;
+    }
+
+    .enlace-imagen {
+
+        display:inline-block;
+
+        text-decoration:none;
+    }
+
+    .imagen-boton {
+
+        max-width:260px;
+
+        width:100%;
+
+        height:auto;
+
+        display:block;
+
+        margin:0 auto;
+
+        transition:transform .2s ease;
+    }
+
+    .imagen-boton:hover {
+
+        transform:scale(1.05);
+
+        cursor:pointer;
+    }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ================================================= -->
+    <!-- TARJETA                                          -->
+    <!-- ================================================= -->
+
+    <div class="card">
+
+        <!-- Imagen de fondo -->
+
+        <img
+            class="cover"
+            src="portada.png"
+            alt="Portada"
+        >
+
+
+        <!-- ================================================= -->
+        <!-- DADO                                              -->
+        <!-- ================================================= -->
+
+        <div
+            id="dado"
+            class="dado"
+            onclick="tirarDado()"
+        >
+
+            <!-- Los 9 espacios posibles -->
+
+            <div id="p1" class="punto p1"></div>
+            <div id="p2" class="punto p2"></div>
+            <div id="p3" class="punto p3"></div>
+
+            <div id="p4" class="punto p4"></div>
+            <div id="p5" class="punto p5"></div>
+            <div id="p6" class="punto p6"></div>
+
+            <div id="p7" class="punto p7"></div>
+            <div id="p8" class="punto p8"></div>
+            <div id="p9" class="punto p9"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- BOTÓN SITIO WEB                                  -->
+    <!-- ================================================= -->
+
+    <div class="contenedor-enlace-web">
+
+        <a
+            href="https://readmindbk.github.io/WEB/"
+            class="enlace-imagen"
+            target="_blank"
+        >
+
+            <img
+                class="imagen-boton"
+                src="web.png"
+                alt="Sitio Web"
+            >
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- JAVASCRIPT DEL DADO                              -->
+    <!-- ================================================= -->
+
+    <script>
+
+
+        /* ================================================= */
+        /* SONIDO DEL DADO                                  */
+        /* ================================================= */
+
+        const sonidoDado = new Audio("dado.mp3");
+
+
+        /* ================================================= */
+        /* FUNCIÓN TIRAR DADO                               */
+        /* ================================================= */
+
+        function tirarDado(){
+
+            const dado =
+                document.getElementById("dado");
+
+
+            /* ================================================= */
+            /* REPRODUCIR SONIDO                                */
+            /* ================================================= */
+
+            sonidoDado.currentTime = 0;
+
+            sonidoDado.play();
+
+
+            /* ================================================= */
+            /* EFECTO AMARILLO                                  */
+            /* ================================================= */
+
+            dado.classList.add("presionado");
+
+
+            /*
+            El dado vuelve a blanco
+            después de 1 segundo.
+            */
+
+            setTimeout(function(){
+
+                dado.classList.remove("presionado");
+
+            }, 50);
+
+
+            /* ================================================= */
+            /* GENERAR NÚMERO ALEATORIO                         */
+            /* ================================================= */
+
+            const numero =
+                Math.floor(Math.random() * 6) + 1;
+
+
+            /* ================================================= */
+            /* REINICIAR ANIMACIÓN                              */
+            /* ================================================= */
+
+            dado.classList.remove("tirando");
+
+            void dado.offsetWidth;
+
+            dado.classList.add("tirando");
+
+
+            /* ================================================= */
+            /* OCULTAR TODOS LOS PUNTOS                         */
+            /* ================================================= */
+
+            document
+                .querySelectorAll(".punto")
+                .forEach(punto => {
+
+                    punto.style.display = "none";
+
+                });
+
+
+            /* ================================================= */
+            /* CONFIGURACIÓN DE CADA CARA                      */
+            /* ================================================= */
+
+            const caras = {
+
+                1: ["p5"],
+
+                2: ["p1","p9"],
+
+                3: ["p1","p5","p9"],
+
+                4: ["p1","p3","p7","p9"],
+
+                5: ["p1","p3","p5","p7","p9"],
+
+                6: ["p1","p3","p4","p6","p7","p9"]
+
+            };
+
+
+            /* ================================================= */
+            /* MOSTRAR LOS PUNTOS                               */
+            /* ================================================= */
+
+            caras[numero].forEach(id => {
+
+                document
+                    .getElementById(id)
+                    .style.display = "block";
+
+            });
+
+
+            /* ================================================= */
+            /* MOSTRAR RESULTADO EN CONSOLA                     */
+            /* ================================================= */
+
+            console.log("Salió:", numero);
+
+        }
+
+
+
+        /* ================================================= */
+        /* CARA INICIAL                                      */
+        /* ================================================= */
+
+        document
+            .getElementById("p5")
+            .style.display = "block";
+
+
+    </script>
+
+
+</body>
+</html>
+```
